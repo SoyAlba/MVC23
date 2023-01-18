@@ -41,6 +41,7 @@ namespace MVC23.Controllers
                 Contexto.Vehiculos.Add(veichulo);
                 Contexto.SaveChanges();
                 return RedirectToAction(nameof(Create));
+                
             }
             catch
             {
