@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using MVC23.Models;
 
 namespace MVC23.Controllers
@@ -15,7 +16,9 @@ namespace MVC23.Controllers
         // GET: VeiculoController
         public ActionResult Index()
         {
-            return View();
+            ViewBag.lasMarcas = Contexto.Marcas.ToList();
+            var lista = Contexto.Vehiculos.Include(v => v.Serie).ToList();
+            return View(lista);
         }
 
         // GET: VeiculoController/Details/5
@@ -48,10 +51,29 @@ namespace MVC23.Controllers
                 return View();
             }
         }
-
+        // GET: VeiculoController/Busqueda/5
+        public ActionResult Busqueda(string busca="")
+        {
+            ViewBag.buscar = busca;
+            var lista =( from v in Contexto.Vehiculos
+                        where (v.Matricula.Contains(busca))
+                         select v).Include(v=>v.Serie).ToList();
+            return View(lista);
+        }
+        // GET: VeiculoController/Busqueda2/5
+        public ActionResult Busqueda2(string matricula = "")
+        {
+            ViewBag.matriculas = new SelectList(Contexto.Vehiculos, "Matricula", "Matricula",matricula);
+            var lista = (from v in Contexto.Vehiculos
+                         where (v.Matricula== matricula)
+                         select v).Include(v => v.Serie).ToList();
+            return View(lista);
+        }
         // GET: VeiculoController/Edit/5
         public ActionResult Edit(int id)
         {
+            ViewBag.SerieID = new SelectList(Contexto.Series, "ID", "Nom_serie");
+            VeiculoModelo vehiculo = Contexto.Vehiculos.Find(id);
             return View();
         }
 
