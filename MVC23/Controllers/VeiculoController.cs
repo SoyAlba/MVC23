@@ -74,16 +74,22 @@ namespace MVC23.Controllers
         {
             ViewBag.SerieID = new SelectList(Contexto.Series, "ID", "Nom_serie");
             VeiculoModelo vehiculo = Contexto.Vehiculos.Find(id);
-            return View();
+            return View(vehiculo);
         }
 
         // POST: VeiculoController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(int id, VeiculoModelo vehiculoActualizado)
         {
             try
             {
+                VeiculoModelo VehiculoActualizar = Contexto.Vehiculos.FirstOrDefault(v => v.ID == id);
+                VehiculoActualizar.Matricula = vehiculoActualizado.Matricula;
+                VehiculoActualizar.Color = vehiculoActualizado.Color;
+                VehiculoActualizar.Serie.Marca = vehiculoActualizado.Serie.Marca;
+                VehiculoActualizar.SerieID = vehiculoActualizado.SerieID;
+                Contexto.SaveChanges();
                 return RedirectToAction(nameof(Index));
             }
             catch
