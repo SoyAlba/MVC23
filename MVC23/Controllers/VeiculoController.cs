@@ -73,6 +73,7 @@ namespace MVC23.Controllers
         public ActionResult Edit(int id)
         {
             ViewBag.SerieID = new SelectList(Contexto.Series, "ID", "Nom_serie");
+            ViewBag.MarcaID = new SelectList(Contexto.Marcas, "ID", "Nom_marca");
             VeiculoModelo vehiculo = Contexto.Vehiculos.Find(id);
             return View(vehiculo);
         }
