@@ -24,7 +24,8 @@ namespace MVC23.Controllers
         // GET: VeiculoController/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            VeiculoModelo vehiculo = Contexto.Vehiculos.Include(v => v.Serie).FirstOrDefault(v => v.ID == id);
+            return View(vehiculo);
         }
 
         // GET: VeiculoController/Create
