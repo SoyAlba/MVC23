@@ -18,6 +18,12 @@ namespace MVC23.Controllers
         { 
             return View(contexto.Marcas.ToList());
         }
+        // GET: List
+        public ActionResult List()
+        {
+            List<MarcaModelo> lista = contexto.Marcas.ToList();
+            return View(lista);
+        }
 
         // GET: MarcaController/Details/5
         public ActionResult Details(int id)

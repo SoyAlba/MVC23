@@ -6,10 +6,10 @@ using MVC23.Models;
 
 namespace MVC23.Controllers
 {
-    public class SerieControler : Controller
+    public class SerieController : Controller
     {
         private Contexto Contexto { get; }
-        public SerieControler(Contexto contexto)
+        public SerieController(Contexto contexto)
         {
             this.Contexto = contexto;
         }
@@ -20,6 +20,14 @@ namespace MVC23.Controllers
             var lista = Contexto.Series.Include(s =>s.Marca).ToList();
             return View(lista);
         }
+        // GET: list
+        public ActionResult List(int ID)
+        {
+            MarcaModelo marca = Contexto.Marcas.Include("Series").Single(m => m.ID == ID);
+
+            return View(marca);
+        }
+
 
         // GET: SerieControler/Details/5
         public ActionResult Details(int id)

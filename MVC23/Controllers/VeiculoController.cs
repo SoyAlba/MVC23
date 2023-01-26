@@ -101,9 +101,10 @@ namespace MVC23.Controllers
         }
 
         // GET: VeiculoController/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult Delete(VeiculoModelo vehiculo,int id)
         {
-            return View();
+            VeiculoModelo VehiculoEliminar = Contexto.Vehiculos.FirstOrDefault(v => v.ID == id);
+            return View(VehiculoEliminar);
         }
 
         // POST: VeiculoController/Delete/5
@@ -113,6 +114,9 @@ namespace MVC23.Controllers
         {
             try
             {
+                VeiculoModelo vehiculo = Contexto.Vehiculos.Find(id);
+                Contexto.Vehiculos.Remove(vehiculo);
+                Contexto.SaveChanges();
                 return RedirectToAction(nameof(Index));
             }
             catch
