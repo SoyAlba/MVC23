@@ -52,6 +52,20 @@ namespace MVC23.Controllers
                 return View();
             }
         }
+        public ActionResult Listado(int Id)
+        {
+            ViewBag.lasMarcas = Contexto.Marcas.ToList();
+            var lista = Contexto.Vehiculos.Include(v => v.Serie).ToList();
+            return View(lista);
+        }
+        public ActionResult Listado2(int marcaID=1, int serieID=0)
+        {
+            ViewBag.lasMarcas = new SelectList(Contexto.Marcas, "ID", "Nom_marca", marcaID);
+            ViewBag.lasSeries = new SelectList(Contexto.Series.Where(s => s.MarcaID == marcaID), "Id", "Nom_Serie", serieID);
+            List<VeiculoModelo> vehiculos = Contexto.Vehiculos.Where(v => v.SerieID == serieID).ToList();
+            return View(vehiculos);
+        }
+       
         // GET: VeiculoController/Busqueda/5
         public ActionResult Busqueda(string busca="")
         {
@@ -78,6 +92,7 @@ namespace MVC23.Controllers
             VeiculoModelo vehiculo = Contexto.Vehiculos.Find(id);
             return View(vehiculo);
         }
+        
 
         // POST: VeiculoController/Edit/5
         [HttpPost]
