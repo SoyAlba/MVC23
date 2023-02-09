@@ -3,11 +3,25 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MVC23.Models;
+using System.Configuration;
+using Microsoft.Data.SqlClient;
+using System.Data;
+using System.Drawing;
+using System;
 
 namespace MVC23.Controllers
 {
     public class VeiculoController : Controller
     {
+        public class VehiculoTotal
+        {
+            public string Nom_marca { get; set; }
+            public string Nom_Serie { get; set; }
+            public string Matricula { get; set; }
+            public string Color{ get; set; }
+            
+            
+        }
         private Contexto Contexto { get; }
         public VeiculoController(Contexto contexto)
         {
@@ -55,7 +69,11 @@ namespace MVC23.Controllers
         public ActionResult Listado(int Id)
         {
             ViewBag.lasMarcas = Contexto.Marcas.ToList();
-            var lista = Contexto.Vehiculos.Include(v => v.Serie).ToList();
+            //var lista = Contexto.Series.Include("vehiculos",
+            return View();
+        }
+        public ActionResult Listado3() {
+            var lista = Contexto.Vehiculos.FromSqlRaw("getSeriesVehiculos").ToList();
             return View(lista);
         }
         public ActionResult Listado2(int marcaID=1, int serieID=0)
