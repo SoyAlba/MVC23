@@ -38,7 +38,7 @@ namespace MVC23.Controllers
         // GET: SerieControler/Create
         public ActionResult Create()
         {
-            ViewBag.MarcaID = new SelectList(Contexto.Series, "ID", "Nom_serie");
+            ViewBag.MarcaID = new SelectList(Contexto.Marcas, "ID", "Nom_marca");
             return View();
         }
 

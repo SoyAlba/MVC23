@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MVC23.Models;
+using static MVC23.Controllers.VeiculoController;
 
 namespace MVC23.Models
 {
@@ -15,5 +16,6 @@ namespace MVC23.Models
         public DbSet<SerieModelo> Series { get; set; }
         public DbSet<VeiculoModelo> Vehiculos { get; set; }
         public DbSet<MVC23.Models.VeiculoModelo> VeiculoModelo { get; set; }
+        public DbSet<VehiculoTotal> VistaTotal { get; set; }
     }
 }

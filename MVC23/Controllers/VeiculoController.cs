@@ -8,6 +8,7 @@ using Microsoft.Data.SqlClient;
 using System.Data;
 using System.Drawing;
 using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace MVC23.Controllers
 {
@@ -17,6 +18,7 @@ namespace MVC23.Controllers
         {
             public string Nom_marca { get; set; }
             public string Nom_Serie { get; set; }
+            [Key]
             public string Matricula { get; set; }
             public string Color{ get; set; }
             
@@ -45,18 +47,18 @@ namespace MVC23.Controllers
         // GET: VeiculoController/Create
         public ActionResult Create()
         {
-            ViewBag.SerieID = new SelectList(Contexto.Series, "ID", "Nom_serie");
+            ViewBag.SerieID = new SelectList(Contexto.Series, "Id", "Nom_Serie");
             return View();
         }
 
         // POST: VeiculoController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(VeiculoModelo veichulo)
+        public ActionResult Create(VeiculoModelo vehiculo)
         {
             try
             {
-                Contexto.Vehiculos.Add(veichulo);
+                Contexto.Vehiculos.Add(vehiculo);
                 Contexto.SaveChanges();
                 return RedirectToAction(nameof(Create));
                 
@@ -72,16 +74,16 @@ namespace MVC23.Controllers
             //var lista = Contexto.Series.Include("vehiculos",
             return View();
         }
-        public ActionResult Listado3() {
-            var lista = Contexto.Vehiculos.FromSqlRaw("getSeriesVehiculos").ToList();
-            return View(lista);
-        }
         public ActionResult Listado2(int marcaID=1, int serieID=0)
         {
             ViewBag.lasMarcas = new SelectList(Contexto.Marcas, "ID", "Nom_marca", marcaID);
             ViewBag.lasSeries = new SelectList(Contexto.Series.Where(s => s.MarcaID == marcaID), "Id", "Nom_Serie", serieID);
-            List<VeiculoModelo> vehiculos = Contexto.Vehiculos.Where(v => v.SerieID == serieID).ToList();
+            List <VeiculoModelo> vehiculos = Contexto.Vehiculos.Where(v => v.SerieID == serieID).ToList();
             return View(vehiculos);
+        }
+        public ActionResult Listado3() {
+            List<VehiculoTotal> lista = Contexto.VistaTotal.ToList();
+            return View(lista);
         }
        
         // GET: VeiculoController/Busqueda/5

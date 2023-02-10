@@ -31,18 +31,20 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Matricula)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Color)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nom_Serie)
-            </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Nom_marca)
                 </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nom_Serie)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Matricula)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Color)
+                </td>
+            
+                
             <td>
                     <a asp-action="Edit" asp-route-id="@item.Matricula">Edit</a> |
                     <a asp-action="Details" asp-route-id="@item.Matricula">Details</a> |
