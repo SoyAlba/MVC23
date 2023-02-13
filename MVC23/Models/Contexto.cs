@@ -12,6 +12,15 @@ namespace MVC23.Models
         public Contexto(DbContextOptions<Contexto> options) : base(options)
         {
         }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder
+                .Entity<VehiculoTotal>(
+                    eb =>
+                    {
+                        eb.HasNoKey();
+                    });
+        }
         public DbSet<MarcaModelo> Marcas { get; set; }
         public DbSet<SerieModelo> Series { get; set; }
         public DbSet<VeiculoModelo> Vehiculos { get; set; }

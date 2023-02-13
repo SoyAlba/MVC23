@@ -85,7 +85,15 @@ namespace MVC23.Controllers
             List<VehiculoTotal> lista = Contexto.VistaTotal.ToList();
             return View(lista);
         }
-       
+        public ActionResult Listado4()
+        {
+            //var elColor = new SqlParameter("@ColorSel", color);
+            var lista = Contexto.VistaTotal.FromSql($"EXECUTE getSeriesVehiculos").ToList();
+            //var lista = Contexto.VistaTotal.FromSql($"select Marcas.Nom_marca,Series.Nom_Serie, VeiculoModelo.Matricula,VeiculoModelo.Color from Marcas join Series on (Marcas.ID=Series.MarcaID) join VeiculoModelo on(Series.Id=VeiculoModelo.SerieID)");
+            //var lsita =Contexto.vistaToatal.ToList();
+            return View(lista);
+        }
+
         // GET: VeiculoController/Busqueda/5
         public ActionResult Busqueda(string busca="")
         {
