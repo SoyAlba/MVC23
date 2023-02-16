@@ -24,7 +24,9 @@ namespace MVC23.Models
         public DbSet<MarcaModelo> Marcas { get; set; }
         public DbSet<SerieModelo> Series { get; set; }
         public DbSet<VeiculoModelo> Vehiculos { get; set; }
+        public DbSet<ExtraModelo> Extras { get; set; }
         public DbSet<MVC23.Models.VeiculoModelo> VeiculoModelo { get; set; }
         public DbSet<VehiculoTotal> VistaTotal { get; set; }
+        public List<VehiculoExtraModelo> vehiculoExtras { get; set; }
     }
 }

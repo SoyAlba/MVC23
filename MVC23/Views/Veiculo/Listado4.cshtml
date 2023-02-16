@@ -1,4 +1,4 @@
-﻿@model IEnumerable<MVC23.Models.Vehic>
+﻿@model IEnumerable<MVC23.Controllers.VeiculoController.VehiculoTotal>
 
 @{
     ViewData["Title"] = "Listado4";
@@ -13,13 +13,16 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Matricula)
+                @Html.DisplayName("Matricula")
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Color)
+                @Html.DisplayName("Color")
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Serie)
+                @Html.DisplayName("Serie")
+            </th
+            <th>
+                @Html.DisplayName("Marca")
             </th>
             <th></th>
         </tr>
@@ -34,12 +37,10 @@
                 @Html.DisplayFor(modelItem => item.Color)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Serie.Id)
-            </td>
+                @Html.DisplayFor(modelItem => item.Nom_Serie)
+            </td
             <td>
-                <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+                @Html.DisplayFor(modelItem => item.Nom_marca)
             </td>
         </tr>
 }
