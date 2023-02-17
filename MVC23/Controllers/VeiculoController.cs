@@ -48,6 +48,7 @@ namespace MVC23.Controllers
         public ActionResult Create()
         {
             ViewBag.SerieID = new SelectList(Contexto.Series, "Id", "Nom_Serie");
+            ViewBag.VehiculosExtras = new MultiSelectList(Contexto.Extras, "Id","Tipo_Extra");
             return View();
         }
 
@@ -59,6 +60,12 @@ namespace MVC23.Controllers
             try
             {
                 Contexto.Vehiculos.Add(vehiculo);
+                Contexto.SaveChanges();
+               foreach(var xtraID in vehiculo.ExtrasSelecionados)
+                {
+                    var obj = new VehiculoExtraModelo() { extraID = xtraID, vehiculoID = vehiculo.ID };
+                    Contexto.vehiculoExtras.Add(obj);
+                }
                 Contexto.SaveChanges();
                 return RedirectToAction(nameof(Create));
                 

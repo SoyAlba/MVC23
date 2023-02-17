@@ -3,9 +3,9 @@
     public class VehiculoExtraModelo
     {
         public int ID { get; set; }
-        public VeiculoModelo vehiculo { get; set; }
-        public int VehiculoID { get; set; }
+        public int extraID { get; set; }
         public ExtraModelo Extra { get; set; }
-        public int ExtraID { get; set; }
+        public int vehiculoID { get; set; }
+        public VehiculoExtraModelo vehiculo { get; set; }
     }
 }
