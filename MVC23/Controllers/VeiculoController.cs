@@ -122,9 +122,11 @@ namespace MVC23.Controllers
         // GET: VeiculoController/Edit/5
         public ActionResult Edit(int id)
         {
-            ViewBag.SerieID = new SelectList(Contexto.Series, "ID", "Nom_serie");
-            ViewBag.MarcaID = new SelectList(Contexto.Marcas, "ID", "Nom_marca");
+
             VeiculoModelo vehiculo = Contexto.Vehiculos.Find(id);
+            vehiculo.ExtrasSelecionados =Contexto.vehiculoExtras.Where(v => v.vehiculoID == id).Select(v => v.extraID).ToList();
+            ViewBag.SerieID = new SelectList(Contexto.Series, "ID", "Nom_serie");
+            ViewBag.VehiculosExtras = new MultiSelectList(Contexto.Extras, "Id", "Tipo_Extra");
             return View(vehiculo);
         }
         
@@ -141,6 +143,13 @@ namespace MVC23.Controllers
                 VehiculoActualizar.Color = vehiculoActualizado.Color;
                 VehiculoActualizar.Serie.Marca = vehiculoActualizado.Serie.Marca;
                 VehiculoActualizar.SerieID = vehiculoActualizado.SerieID;
+                VehiculoActualizar.ExtrasSelecionados = vehiculoActualizado.ExtrasSelecionados;
+                Contexto.vehiculoExtras.Remove(Contexto.vehiculoExtras.FirstOrDefault(v => v.vehiculoID == id));
+                foreach (var xtraID in vehiculoActualizado.ExtrasSelecionados)
+                {
+                    var obj = new VehiculoExtraModelo() { extraID = xtraID, vehiculoID = vehiculoActualizado.ID };
+                    Contexto.vehiculoExtras.Add(obj);
+                }
                 Contexto.SaveChanges();
                 return RedirectToAction(nameof(Index));
             }
