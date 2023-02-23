@@ -134,23 +134,28 @@ namespace MVC23.Controllers
         // POST: VeiculoController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, VeiculoModelo vehiculoActualizado)
+        public ActionResult Edit(int id, VeiculoModelo vehiculoModificado)
         {
             try
             {
                 VeiculoModelo VehiculoActualizar = Contexto.Vehiculos.FirstOrDefault(v => v.ID == id);
-                VehiculoActualizar.Matricula = vehiculoActualizado.Matricula;
-                VehiculoActualizar.Color = vehiculoActualizado.Color;
-                VehiculoActualizar.Serie.Marca = vehiculoActualizado.Serie.Marca;
-                VehiculoActualizar.SerieID = vehiculoActualizado.SerieID;
-                VehiculoActualizar.ExtrasSelecionados = vehiculoActualizado.ExtrasSelecionados;
-                Contexto.vehiculoExtras.Remove(Contexto.vehiculoExtras.FirstOrDefault(v => v.vehiculoID == id));
-                foreach (var xtraID in vehiculoActualizado.ExtrasSelecionados)
+                VehiculoActualizar.Matricula = vehiculoModificado.Matricula;
+                VehiculoActualizar.Color = vehiculoModificado.Color;
+                VehiculoActualizar.SerieID = vehiculoModificado.SerieID;
+                Contexto.SaveChanges();
+
+                var lista = Contexto.vehiculoExtras.Where(v=>v.vehiculoID==vehiculoModificado.ID).ToList();
+                foreach (var obj in lista)
                 {
-                    var obj = new VehiculoExtraModelo() { extraID = xtraID, vehiculoID = vehiculoActualizado.ID };
-                    Contexto.vehiculoExtras.Add(obj);
+                    Contexto.vehiculoExtras.Remove(obj);
+                }
+                foreach (var xtraID in vehiculoModificado.ExtrasSelecionados)
+                {
+                    var obj = new VehiculoExtraModelo() { extraID = xtraID, vehiculoID = vehiculoModificado.ID };
+                    Contexto.vehiculoExtras.Remove(obj);
                 }
                 Contexto.SaveChanges();
+
                 return RedirectToAction(nameof(Index));
             }
             catch
