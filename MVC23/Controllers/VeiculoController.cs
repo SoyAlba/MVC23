@@ -33,6 +33,7 @@ namespace MVC23.Controllers
         public ActionResult Index()
         {
             ViewBag.lasMarcas = Contexto.Marcas.ToList();
+            ViewBag.losExtras = Contexto.Extras.ToList();
             var lista = Contexto.Vehiculos.Include(v => v.Serie).ToList();
             return View(lista);
         }
@@ -84,7 +85,8 @@ namespace MVC23.Controllers
         public ActionResult Listado2(int marcaID=1, int serieID=0)
         {
             ViewBag.lasMarcas = new SelectList(Contexto.Marcas, "ID", "Nom_marca", marcaID);
-            ViewBag.lasSeries = new SelectList(Contexto.Series.Where(s => s.MarcaID == marcaID), "Id", "Nom_Serie", serieID);
+            ViewBag.lasSeries = new SelectList(Contexto.Series.Where(s => s.MarcaID == marcaID), "Id", "Nom_Serie", serieID)
+            ViewBag.losExtras = Contexto.Extras.ToList();
             List <VeiculoModelo> vehiculos = Contexto.Vehiculos.Where(v => v.SerieID == serieID).ToList();
             return View(vehiculos);
         }

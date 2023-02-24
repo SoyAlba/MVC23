@@ -23,9 +23,14 @@
             <th>
                 @Html.DisplayNameFor(model => model.Color)
             </th>
+            
+            <th>
+                @Html.DisplayName("Extras")
+            </th
             <th>
                 @Html.DisplayNameFor(model => model.Serie)
             </th>
+            
             <th></th>
         </tr>
     </thead>
@@ -37,6 +42,18 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Color)
+            </td>
+            <td>        
+                <table>
+                    <tr>
+                        <td>
+                            @foreach(VehiculoExtraModelo extrasVehiculo in item.vehiculoExtras)
+				            {
+					            @Html.DisplayFor(modelItem => extrasVehiculo.Extra.Tipo_Extra)
+				            }
+                        </td>
+                    </tr>
+                </table>
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Serie.Id)
